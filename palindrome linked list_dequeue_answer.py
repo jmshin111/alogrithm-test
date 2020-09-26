@@ -1,5 +1,7 @@
 # A single node of a singly linked list
+import collections
 import timeit
+from typing import Deque
 
 
 class Node:
@@ -27,37 +29,24 @@ class LinkedList:
 def palindromLinkedList(linked_list) -> bool:
 
 
-  stack = []
+  #데크 자료형 선언
+  q: Deque = collections.deque()
 
-  index = 1
-  odd_number_result = False
-  half_number =0
+  if  not linked_list.head:
+    return True
 
-  result = True
-  if linked_list.len % 2 == 1:
-    odd_number_result = True
-    half_number = (int)(linked_list.len / 2 + 1)
-  else:
-    odd_number_result = False
-    half_number = (int)(linked_list.len / 2)
+  node = linked_list.head
 
-  index_linked_list = linked_list.head
-  while index_linked_list != None:
+  while node is not None:
+    q.append(node.data)
+    node = node.next
 
-    if( odd_number_result and index == half_number ):
-      index = index + 1
-      index_linked_list = index_linked_list.next
-      continue
-    elif (index <= half_number):
-      stack.append(index_linked_list.data)
-    elif (index_linked_list.data != stack.pop()):
-      result = False
-      break
 
-    index = index+1
-    index_linked_list = index_linked_list.next
+  while len(q)>1:
+    if q.popleft() != q.pop():
+      return False
 
-  return result
+  return True
 
 
 linked_list = LinkedList()
@@ -67,10 +56,10 @@ linked_list.add(Node(5))
 linked_list.add(Node(4))
 linked_list.add(Node(3))
 
+
+
 start_time = timeit.default_timer()
 print(palindromLinkedList(linked_list))
 terminate_time = timeit.default_timer()  # 종료 시간 체크
 
 print("%f초 걸렸습니다." % (terminate_time - start_time))
-
-
