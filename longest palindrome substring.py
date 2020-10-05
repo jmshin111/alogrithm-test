@@ -1,4 +1,4 @@
-input_str = '1123432121'
+input_str = '234'
 
 
 # def find_longest_palindrom(input_str):
